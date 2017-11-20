@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
     [SerializeField]
     float jumpStrength = 10;
 
@@ -28,6 +29,8 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     LayerMask whatCountsAsJumpPad;
 
+    Animator anim;
+
 
     private AudioSource audioSource;
     private bool isOnGround = false;
@@ -36,24 +39,27 @@ public class PlayerMovement : MonoBehaviour {
     Rigidbody2D myRigidbody;
     private float horizontalInput;
     private Vector2 jumpForce;
+    private bool facingRight = true;
 
     // Use this for initialization
-    void Start () {
-        // This code teleports the gameobject to a new location
-        //transform.position = new Vector3(0, 0, 0);
+    void Start()
+    {
+        
 
         myRigidbody = GetComponent<Rigidbody2D>();
-        //audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         jumpForce = new Vector2(0, jumpStrength);
-	}
-	
-	// Update is called once per frame
-	private void Update ()
+        anim = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
         GetMovementInput();
         GetJumpInput();
         UpdateIsOnGround();
         UpdateIsOnJumpPad();
+
     }
 
     private void GetJumpInput()
@@ -75,19 +81,21 @@ public class PlayerMovement : MonoBehaviour {
         horizontalInput = Input.GetAxis("Horizontal");
     }
 
-    // Update is called once every fixed increment of time
+    
     private void FixedUpdate()
     {
         Move();
-        Jump();        
+        Jump();
     }
 
     private void UpdateIsOnGround()
     {
-       Collider2D[] groundObjects = Physics2D.OverlapCircleAll(
-            groundDetectPoint.position, groundDetectRadius, whatCountsAsGround);
+        Collider2D[] groundObjects = Physics2D.OverlapCircleAll(
+             groundDetectPoint.position, groundDetectRadius, whatCountsAsGround);
 
         isOnGround = groundObjects.Length > 0;
+        anim.SetBool("Ground", isOnGround);
+        anim.SetFloat("vSpeed", myRigidbody.velocity.y);
     }
     private void UpdateIsOnJumpPad()
     {
@@ -106,7 +114,7 @@ public class PlayerMovement : MonoBehaviour {
             isOnGround = false;
             isJumpPad = false;
             shouldJump = false;
-           // audioSource.Play();
+            audioSource.Play();
         }
     }
 
@@ -114,5 +122,22 @@ public class PlayerMovement : MonoBehaviour {
     {
         myRigidbody.velocity =
             new Vector2(horizontalInput * movementSpeed, myRigidbody.velocity.y);
+        anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
+        if (horizontalInput > 0 && !facingRight)
+        {
+            Flip();
+        }
+        else if (horizontalInput < 0 && facingRight)
+        {
+            Flip();
+        }
     }
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+
 }

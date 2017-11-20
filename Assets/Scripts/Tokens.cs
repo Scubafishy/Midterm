@@ -3,32 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Coin : MonoBehaviour
-{
-    static int coinCount = 0;
+public class Tokens : MonoBehaviour {
+    public static  int totalToken = 0;
+    [SerializeField]
+    private  int amountofTokensInLevel;
 
-
-    private Text coinCountText;
+    private Text TotalTokenText;
     private AudioSource audioSource;
     private SpriteRenderer spriteRenderer;
-    private BoxCollider2D boxCollider2D;
+    private PolygonCollider2D boxCollider2D;
 
     private void Start()
     {
-        coinCountText = GameObject.Find("CoinCountText").GetComponent<Text>();
-        coinCountText.text = "Coin Count: " + coinCount;
-        boxCollider2D = GetComponent<BoxCollider2D>();
+        TotalTokenText = GameObject.Find("TokenText").GetComponent<Text>();
+        
+        boxCollider2D = GetComponent<PolygonCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
     }
 
+    private void Update()
+    {
+        TotalTokenText.text = totalToken + " / " + amountofTokensInLevel;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             audioSource.Play();
-            coinCount++;
-            coinCountText.text = "Coin Count: " + coinCount;
+            totalToken++;
+            
             spriteRenderer.enabled = false;
             boxCollider2D.enabled = false;
             //Destroy(gameObject);

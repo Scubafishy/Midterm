@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour {
     float cameraFollowSpeed = 5;
 
     [SerializeField]
-    float xOffset;
+    public  float xOffset;
 
     [SerializeField]
     float yOffset;
