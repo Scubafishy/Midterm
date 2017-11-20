@@ -38,7 +38,7 @@ public class Door : MonoBehaviour
         if (Tokens.totalToken < tokensNeeded)
         {
 
-            DoorText.text = "The Door is closed";
+            DoorText.text = tokensNeeded + " amount needed to open door";
             spriteRenderer.color = deactivatedColor;
         }
         else if (Tokens.totalToken >= tokensNeeded)

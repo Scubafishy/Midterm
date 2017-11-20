@@ -81,7 +81,7 @@ MonoBehaviour:
   sceneToLoad: Level 2
   activatedColor: {r: 0, g: 0, b: 0, a: 1}
   deactivatedColor: {r: 0.5529412, g: 0.43137255, b: 0.21960784, a: 1}
-  tokensNeeded: 12
+  tokensNeeded: 7
 --- !u!212 &212155226067908376
 SpriteRenderer:
   m_ObjectHideFlags: 1

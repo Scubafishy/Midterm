@@ -96,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
         isOnGround = groundObjects.Length > 0;
         anim.SetBool("Ground", isOnGround);
         anim.SetFloat("vSpeed", myRigidbody.velocity.y);
+        anim.SetBool("Death", false);
     }
     private void UpdateIsOnJumpPad()
     {

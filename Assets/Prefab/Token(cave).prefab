@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3d7b2a8e458564cbb652f29d5d7ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountofTokensInLevel: 6
+  amountofTokensInLevel: 13
 --- !u!212 &212114661921175262
 SpriteRenderer:
   m_ObjectHideFlags: 1
